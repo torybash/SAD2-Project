@@ -13,7 +13,7 @@ public class MySQLTest {
     	String username = "";
     	String password = "";
     	
-    	String sqlStatement = "SELECT * FROM testtable;";
+    	String sqlStatement = "SELECT * FROM testable;";
 
     	java.sql.PreparedStatement ps = null;
 		java.sql.ResultSet rs = null;
