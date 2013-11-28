@@ -22,21 +22,28 @@ public class PairFinder {
 	{
 		
 		boolean checker =true;
-		while(provider.Next())
+		while(!provider.isCurrentRowTheLast())
 		{			
-			Pair p = provider.NextItem();
+			
+			Pair p = provider.getCurrentItemAsPair();
+			if(p==null)
+				break;
+			System.out.print(""+p.a1 + " - " + p.a2 + " : ");
 			
 			if(checker && pairs.size()<k)
 			{
 				System.out.println("adding" +pairs.size());
 				int i = pairs.indexOf(p);
-				if(!(i>-1))
+				if(!(i>-1)){
 					pairs.add(p);
-				else
+				}else{
 					pairs.get(i).count++;
-					
-				if(pairs.size()==k)
+				}
+				
+				if(pairs.size()==k){
 					checker=false;
+				}
+				provider.moveToNextRow();
 				continue;
 			}
 			System.out.println("After adding");
@@ -46,7 +53,8 @@ public class PairFinder {
 				pairs.get(i).count++;
 			}
 			else
-			{
+			{ //If code has found the pair already in pairs.
+				
 				int indexOfPair = -1;				
 				for (Pair e : pairs) {
 					if(e.count==0)
@@ -58,25 +66,29 @@ public class PairFinder {
 				if(indexOfPair>-1)
 				{
 					//replace
-					pairs.remove(indexOfPair);					
+					pairs.remove(indexOfPair);
+				p.count++;
 					pairs.add(p);
 					
 				}
 				else
 				{
+					System.out.println("reduced all by 1");
 					//reduce all by 1 count-
 					for (Pair e : pairs) {
 						e.count--;
 					}
 				}
 			}
+			provider.moveToNextRow();
 			
-			}
+		}
 			
 		Pair result =new Pair(0,0);		
 		for(Pair e : pairs)
 		{
-			if(e.count>result.count)
+			System.out.println(e.a1 + ", " + e.a2 + " : " + e.count);
+			if(e.count>=result.count)
 			{
 				result = e;
 			}

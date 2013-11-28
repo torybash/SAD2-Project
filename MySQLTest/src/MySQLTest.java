@@ -10,8 +10,8 @@ public class MySQLTest {
     public void run(){
     	String host = "127.0.0.1";
     	String table = "test";
-    	String username = "admin";
-    	String password = "admin";
+    	String username = "";
+    	String password = "";
     	
     	String sqlStatement = "Select distinct a1.actor_id, a2.actor_id, m.name from roles a1 inner join roles a2 on a1.movie_id=a2.movie_id inner join movies m on a1.movie_id=m.id where not a1.actor_id=a2.actor_id and m.year<=1904 and m.year>=1904 Order by a1.actor_id;";
 

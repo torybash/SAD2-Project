@@ -18,7 +18,7 @@ public class SimplePairProvider implements Provider {
 	}
 	
 	@Override
-	public Pair NextItem() {
+	public Pair getCurrentItemAsPair() {
 		if(i==50)
 			i=0;			
 		i++;
@@ -30,8 +30,14 @@ public class SimplePairProvider implements Provider {
 		
 	}
 	
-	public boolean Next() {
+	public boolean isCurrentRowTheLast() {
 		return globalI<=stopAt;
+	}
+
+	@Override
+	public boolean moveToNextRow() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
