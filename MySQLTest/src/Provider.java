@@ -3,6 +3,7 @@ public interface Provider {
 
 	
 	
-	public Pair Next();
+	public Pair NextItem();
+	public boolean Next();
 	
 }
