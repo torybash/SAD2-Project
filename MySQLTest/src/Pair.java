@@ -29,4 +29,13 @@ public class Pair implements Comparable  {
 		}
 		return -1;
 	}
+	
+	@Override
+	public boolean equals(Object a){
+		if(a instanceof Pair){
+			Pair p = (Pair) a;
+			if(p.a1 == a1 && p.a2 == a2) return true;
+		}
+		return false;
+	}
 }

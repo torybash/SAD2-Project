@@ -7,4 +7,6 @@ public interface Provider {
 	public boolean isCurrentRowTheLast();
 	public boolean moveToNextRow();
 	
+	public Pair getNextPair();
+	public void CloseOff();
 }

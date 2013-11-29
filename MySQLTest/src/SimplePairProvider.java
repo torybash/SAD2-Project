@@ -40,4 +40,16 @@ public class SimplePairProvider implements Provider {
 		return false;
 	}
 
+	@Override
+	public Pair getNextPair() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void CloseOff() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

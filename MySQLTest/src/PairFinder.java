@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class PairFinder {
@@ -18,6 +20,7 @@ public class PairFinder {
 	}
 	
 	
+	
 	public Pair MisraGriesAlgo()
 	{
 		
@@ -28,11 +31,9 @@ public class PairFinder {
 			Pair p = provider.getCurrentItemAsPair();
 			if(p==null)
 				break;
-			System.out.print(""+p.a1 + " - " + p.a2 + " : ");
 			
 			if(checker && pairs.size()<k)
 			{
-				System.out.println("adding" +pairs.size());
 				int i = pairs.indexOf(p);
 				if(!(i>-1)){
 					pairs.add(p);
@@ -46,7 +47,6 @@ public class PairFinder {
 				provider.moveToNextRow();
 				continue;
 			}
-			System.out.println("After adding");
 			int i = pairs.indexOf(p);
 			if(i>-1)
 			{
@@ -67,13 +67,12 @@ public class PairFinder {
 				{
 					//replace
 					pairs.remove(indexOfPair);
-				p.count++;
+					p.count++;
 					pairs.add(p);
 					
 				}
 				else
 				{
-					System.out.println("reduced all by 1");
 					//reduce all by 1 count-
 					for (Pair e : pairs) {
 						e.count--;
@@ -87,13 +86,45 @@ public class PairFinder {
 		Pair result =new Pair(0,0);		
 		for(Pair e : pairs)
 		{
-			System.out.println(e.a1 + ", " + e.a2 + " : " + e.count);
 			if(e.count>=result.count)
 			{
 				result = e;
 			}
 		}
 		return result;
+		
+	}
+
+
+
+	public void StupidAlgo() {
+		
+		System.out.println("Start algo");
+
+		Map<Pair, Integer> map = new HashMap<Pair, Integer>();
+		
+		Pair pair = provider.getNextPair();
+		
+		while (pair != null){
+			if (map.containsKey(pair)){
+				int currentVal = map.get(pair);
+				map.put(pair, currentVal + 1);
+			}else{
+				map.put(pair, 1);
+			}
+			
+			if (pair.a1 == 151786) System.out.println(pair);
+			
+			pair = provider.getNextPair();
+		}
+		
+		//provider.CloseOff();
+		
+		for(Integer val : map.values()){
+			if (val > 1) System.out.println(val);
+		} 
+		
+		System.out.println("Stop algo");
 		
 	}
 
