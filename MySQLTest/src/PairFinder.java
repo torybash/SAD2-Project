@@ -20,18 +20,45 @@ public class PairFinder {
 	}
 	
 	
+	public void MisraGriesAlgo(int years, int from, int to)
+	{
+		if(to-from<=years)
+			provider.setStream(from, to);
+		else
+		{
+			int count = to-from-years+1;
+			int fromCount=from;
+			int toCount=from+years;
+			Pair[] pairs = new Pair[count];
+			for(int i=0; i<count;i++)
+			{
+							
+				provider.setStream(fromCount,toCount);
+				pairs[i] = MisraGriesAlgo();
+				System.out.println(i+1+"/"+count);
+				toCount+=i;	
+				fromCount+=1;
+			}
+			Pair rp = new Pair(0,0);
+			for(Pair p : pairs)
+			{
+				if(p.count>rp.count)
+				{
+					rp=p;
+				}
+			}
+			System.out.println(rp.toString());
+			
+		}
+	}
+	
 	
 	public Pair MisraGriesAlgo()
-	{
-		
+	{		
 		boolean checker =true;
-		while(!provider.isCurrentRowTheLast())
-		{			
-			
-			Pair p = provider.getCurrentItemAsPair();
-			if(p==null)
-				break;
-			
+		Pair p = provider.getNextPair();
+		while(p!=null)
+		{														
 			if(checker && pairs.size()<k)
 			{
 				int i = pairs.indexOf(p);
@@ -44,7 +71,7 @@ public class PairFinder {
 				if(pairs.size()==k){
 					checker=false;
 				}
-				provider.moveToNextRow();
+				p = provider.getNextPair();
 				continue;
 			}
 			int i = pairs.indexOf(p);
@@ -79,8 +106,8 @@ public class PairFinder {
 					}
 				}
 			}
-			provider.moveToNextRow();
-			
+			//provider.moveToNextRow();
+			p = provider.getNextPair();
 		}
 			
 		Pair result =new Pair(0,0);		
@@ -101,30 +128,40 @@ public class PairFinder {
 		
 		System.out.println("Start algo");
 
-		Map<Pair, Integer> map = new HashMap<Pair, Integer>();
+		ArrayList<Pair> map = new ArrayList<Pair>();
 		
 		Pair pair = provider.getNextPair();
 		
-		while (pair != null){
-			if (map.containsKey(pair)){
-				int currentVal = map.get(pair);
-				map.put(pair, currentVal + 1);
-			}else{
-				map.put(pair, 1);
+		while (pair != null){			
+			if(map.contains(pair))
+			{
+				int c = map.get(map.indexOf(pair)).count;
+				map.remove(map.indexOf(pair));
+				pair.count=c+1;
+				map.add(pair);
+			}
+			else
+			{
+				map.add(pair);
 			}
 			
-			if (pair.a1 == 151786) System.out.println(pair);
 			
 			pair = provider.getNextPair();
 		}
 		
 		//provider.CloseOff();
 		
-		for(Integer val : map.values()){
-			if (val > 1) System.out.println(val);
-		} 
+		Pair result =new Pair(0,0);		
+		for(Pair e : pairs)
+		{
+			if(e.count>=result.count)
+			{
+				result = e;
+			}
+		}
 		
-		System.out.println("Stop algo");
+		
+		System.out.println(result.toString());
 		
 	}
 

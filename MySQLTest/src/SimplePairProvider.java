@@ -17,28 +17,13 @@ public class SimplePairProvider implements Provider {
 		
 	}
 	
-	@Override
-	public Pair getCurrentItemAsPair() {
-		if(i==50)
-			i=0;			
-		i++;
-		globalI++;		
-		return p[i-1];
 
-		
-		
-		
-	}
 	
 	public boolean isCurrentRowTheLast() {
 		return globalI<=stopAt;
 	}
 
-	@Override
-	public boolean moveToNextRow() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	@Override
 	public Pair getNextPair() {
@@ -46,10 +31,13 @@ public class SimplePairProvider implements Provider {
 		return null;
 	}
 
+
+
 	@Override
-	public void CloseOff() {
+	public void setStream(int from, int to) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }
