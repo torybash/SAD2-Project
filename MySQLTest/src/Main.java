@@ -5,7 +5,6 @@ public class Main {
 		
 		//test.run();
 		SQLSimpleProvider ssp = new SQLSimpleProvider();
-		ssp.setStream();
 		PairFinder pf = new PairFinder(95, ssp);
 		pf.MisraGriesAlgo(9, 1900, 1910);
 		//System.out.println(pf.MisraGriesAlgo());

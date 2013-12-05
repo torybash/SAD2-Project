@@ -40,4 +40,12 @@ public class SimplePairProvider implements Provider {
 	}
 
 
+
+	@Override
+	public void executeMovieRetrieval() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

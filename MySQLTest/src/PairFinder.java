@@ -22,6 +22,8 @@ public class PairFinder {
 	
 	public void MisraGriesAlgo(int years, int from, int to)
 	{
+		System.out.println("Starting MG");		
+		
 		if(to-from<=years)
 			provider.setStream(from, to);
 		else

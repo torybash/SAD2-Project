@@ -9,4 +9,5 @@ public interface Provider {
 	
 	public Pair getNextPair();
 	
+	public void executeMovieRetrieval();
 }
