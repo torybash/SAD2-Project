@@ -29,36 +29,56 @@ public class PairFinder {
 			int count = to-from-years+1;
 			int fromCount=from;
 			int toCount=from+years;
-			Pair[] pairs = new Pair[count];
+			Pair[][] pairs = new Pair[count][2];
 			for(int i=0; i<count;i++)
 			{
 							
 				provider.setStream(fromCount,toCount);
-				pairs[i] = MisraGriesAlgo();
-				System.out.println(i+1+"/"+count);
-				toCount+=i;	
-				fromCount+=1;
-			}
-			Pair rp = new Pair(0,0);
-			for(Pair p : pairs)
-			{
-				if(p.count>rp.count)
+				pairs[i] = MisraGriesAlgo(k);
+				
+				Pair[] cP = pairs[i];
+				int min1 = cP[0].count;
+				int max2 = cP[1].count + decrements;
+				if(min1<max2)
 				{
-					rp=p;
+					i--;
+					
+					increaseK();
 				}
+				else{
+					System.out.println(i+1+"/"+count);
+					toCount+=i;	
+					fromCount+=1;
+				}
+				decrements=0;
+				
+				
 			}
-			System.out.println(rp.toString());
+			
+			for(Pair[] p : pairs)
+			{
+				System.out.println(p[0].toString());
+				System.out.println(p[1].toString());
+			}
+			
 			
 		}
 	}
 	
+	private void increaseK() {
+		k+=k;
+	}
 	
-	public Pair MisraGriesAlgo()
+	private int decrements;
+	private int counter;
+	public Pair[] MisraGriesAlgo(int k)
 	{		
 		boolean checker =true;
 		Pair p = provider.getNextPair();
+	
 		while(p!=null)
-		{														
+		{				
+			counter++;
 			if(checker && pairs.size()<k)
 			{
 				int i = pairs.indexOf(p);
@@ -100,6 +120,7 @@ public class PairFinder {
 				}
 				else
 				{
+					decrements++;
 					//reduce all by 1 count-
 					for (Pair e : pairs) {
 						e.count--;
@@ -110,15 +131,24 @@ public class PairFinder {
 			p = provider.getNextPair();
 		}
 			
-		Pair result =new Pair(0,0);		
+		Pair result =new Pair(0,0);
+		Pair result2 =new Pair(0,0);	
 		for(Pair e : pairs)
 		{
 			if(e.count>=result.count)
 			{
+				result2 = result;
 				result = e;
+				
 			}
 		}
-		return result;
+		System.out.println("C: "+counter);
+		System.out.println("D: " +decrements);
+		Pair[] ps = new Pair[2];
+		ps[0] = result;
+		ps[1] = result2;
+		return ps;
+		
 		
 	}
 
