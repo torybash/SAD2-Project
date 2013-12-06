@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class SQLSimpleProvider implements Provider {
@@ -20,8 +23,10 @@ public class SQLSimpleProvider implements Provider {
 	
 	String sqlStatement = "";
 	java.sql.ResultSet moviesRS = null;
-	java.sql.ResultSet actorPairsRS = null;
+	java.sql.ResultSet actorsRS = null;
 	java.sql.Connection cn = null;
+	
+	LinkedList<Pair> currentMovieActorPairs = new LinkedList<Pair>();
 
 	@Override
 	public void setStream(int from, int to) {
@@ -32,8 +37,9 @@ public class SQLSimpleProvider implements Provider {
 			sqlStatement = "Select id, year from movies;";
 			executeMovieRetrieval();
 		}else{
-			sqlStatement = "Select actor_id from roles "
-					+ "where actor_id="+currentMovieID+";";
+			sqlStatement = "Select actor_id, movie_id from roles "
+					+ "where movie_id="+currentMovieID + " "
+							+ "Order by actor_id";
 					
 //					"Select a1.actor_id, a2.actor_id, a2.movie_id from roles a1 " +
 //					"inner join roles a2 on a1.movie_id=a2.movie_id and a1.actor_id<a2.actor_id " +
@@ -73,10 +79,8 @@ public class SQLSimpleProvider implements Provider {
 				
 		try{
 		    java.sql.Statement stmt = cn.createStatement(java.sql.ResultSet.TYPE_FORWARD_ONLY, java.sql.ResultSet.CONCUR_READ_ONLY);
-		    stmt.setFetchSize(Integer.MIN_VALUE);
-		    
-		    actorPairsRS =stmt.executeQuery(sqlStatement); //ps.executeQuery();
-		    actorPairsRS.next(); //flytter til f¿rste result
+		    //stmt.setFetchSize(Integer.MIN_VALUE);
+		    actorsRS =stmt.executeQuery(sqlStatement); //ps.executeQuery();
 		} catch (Exception s){
 			System.out.println(s);
 		} 
@@ -86,36 +90,68 @@ public class SQLSimpleProvider implements Provider {
 	
 	public Pair getNextPair() {		
 		try{
-			if (actorPairsRS != null && actorPairsRS.next()){
-				int a1 = actorPairsRS.getInt(1);
-		        int a2 = actorPairsRS.getInt(2);
-		        
-			    return new Pair(a1,a2);
+			if (!currentMovieActorPairs.isEmpty()){
+				Pair nextPair = currentMovieActorPairs.getFirst();
+				currentMovieActorPairs.removeFirst();
+
+				return nextPair;
 			}else{
-				if (moviesRS.next()){	
-					int currentMovieYear = moviesRS.getInt(2);
-					if (currentMovieYear >= beginYear && currentMovieYear <= endYear){
-						currentMovieID = moviesRS.getInt(1);
-						setStream(beginYear, endYear);
+				while (true){
+					if (moviesRS.next()){	
+						int currentMovieYear = moviesRS.getInt(2);
+						if (currentMovieYear >= beginYear && currentMovieYear <= endYear){
+							currentMovieID = moviesRS.getInt(1);
+							setStream(beginYear, endYear); //creates actorRS
+							prepareActorPairs();
+							return getNextPair(); //try again now that we loaded a movies actors
+						}
+					}else{ //No movies left! Return null to indicate no more pairs
+						return null;
 					}
-					return getNextPair();
-				}else{
-					closeOff();
-					return null;
 				}
 			}
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-		closeOff();
 		return null;
+	}
+	
+	public void restartMovieOutput(){
+		try {
+			moviesRS.first();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void prepareActorPairs(){		
+		ArrayList<Integer> actorList = new ArrayList<Integer>();
+		
+		try {			
+			while (actorsRS.next()){	
+				actorList.add(actorsRS.getInt(1));
+			}
+			
+			//all actors have been added
+			for (int i = 0; i < actorList.size(); i++) {
+				for (int j = i + 1; j < actorList.size(); j++) {
+					Pair pair = new Pair(actorList.get(i), actorList.get(j));
+					currentMovieActorPairs.add(pair);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 	}
 	
 	public void closeOff(){
 		try {
 			cn.close();
 			moviesRS.close();
-			actorPairsRS.close();
+			actorsRS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

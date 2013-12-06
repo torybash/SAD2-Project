@@ -48,4 +48,20 @@ public class SimplePairProvider implements Provider {
 	}
 
 
+
+	@Override
+	public void closeOff() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void restartMovieOutput() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

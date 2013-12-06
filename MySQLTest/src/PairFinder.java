@@ -24,7 +24,7 @@ public class PairFinder {
 	{
 		System.out.println("Starting MG");		
 		
-		if(to-from<=years)
+		if(to-from<years)
 			provider.setStream(from, to);
 		else
 		{
@@ -43,9 +43,10 @@ public class PairFinder {
 				int max2 = cP[1].count + decrements;
 				if(min1<max2)
 				{
-					i--;
+					i--; //restarting this iteration
 					
 					increaseK();
+					provider.restartMovieOutput();
 				}
 				else{
 					System.out.println(i+1+"/"+count);
@@ -54,17 +55,21 @@ public class PairFinder {
 				}
 				decrements=0;
 				
+				System.out.println(cP[0].toString());
+				System.out.println(cP[1].toString());
+				
 				
 			}
 			
-			for(Pair[] p : pairs)
-			{
-				System.out.println(p[0].toString());
-				System.out.println(p[1].toString());
-			}
+//			for(Pair[] p : pairs)
+//			{
+//				System.out.println(p[0].toString());
+//				System.out.println(p[1].toString());
+//			}
 			
 			
 		}
+		provider.closeOff();
 	}
 	
 	private void increaseK() {
@@ -75,6 +80,8 @@ public class PairFinder {
 	private int counter;
 	public Pair[] MisraGriesAlgo(int k)
 	{		
+		System.out.println("Starting MisraGriesAlgo(int k) with k=" + k);
+		
 		boolean checker =true;
 		Pair p = provider.getNextPair();
 	
@@ -139,10 +146,12 @@ public class PairFinder {
 		{
 			if(e.count>=result.count)
 			{
-				result2 = result;
 				result = e;
-				
+			}else if(e.count>=result2.count)
+			{
+				result2 = e;				
 			}
+
 		}
 		System.out.println("C: "+counter);
 		System.out.println("D: " +decrements);
@@ -158,23 +167,23 @@ public class PairFinder {
 
 	public void StupidAlgo() {
 		
-		System.out.println("Start algo");
-
-		ArrayList<Pair> map = new ArrayList<Pair>();
+		provider.setStream(1904, 1910);
+		
+		ArrayList<Pair> pairs = new ArrayList<Pair>();
 		
 		Pair pair = provider.getNextPair();
 		
-		while (pair != null){			
-			if(map.contains(pair))
+		while (pair != null){		
+			if(pairs.contains(pair))
 			{
-				int c = map.get(map.indexOf(pair)).count;
-				map.remove(map.indexOf(pair));
+				int c = pairs.get(pairs.indexOf(pair)).count;
+				pairs.remove(pairs.indexOf(pair));
 				pair.count=c+1;
-				map.add(pair);
+				pairs.add(pair);
 			}
 			else
 			{
-				map.add(pair);
+				pairs.add(pair);
 			}
 			
 			
