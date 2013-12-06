@@ -13,8 +13,8 @@ import java.util.List;
 public class SQLSimpleProvider implements Provider {
 	String host = "127.0.0.1";
 	String table = "test";
-	String username = "";
-	String password = "";
+	String username = "admin";
+	String password = "admin";
 	//String sqlStatement = "Select a1.actor_id, a2.actor_id, m.year, m.id from roles a1 inner join roles a2 on a1.movie_id=a2.movie_id and a1.actor_id < a2.actor_id inner join movies m on a1.movie_id=m.id where not a1.actor_id=a2.actor_id and m.year<=2004 and m.year>=1998 Order by a1.actor_id;";
 
 	int beginYear; 
@@ -38,8 +38,8 @@ public class SQLSimpleProvider implements Provider {
 			executeMovieRetrieval();
 		}else{
 			sqlStatement = "Select actor_id, movie_id from roles "
-					+ "where movie_id="+currentMovieID + " "
-							+ "Order by actor_id";
+					+ "where movie_id="+currentMovieID;
+							
 					
 //					"Select a1.actor_id, a2.actor_id, a2.movie_id from roles a1 " +
 //					"inner join roles a2 on a1.movie_id=a2.movie_id and a1.actor_id<a2.actor_id " +
@@ -72,7 +72,8 @@ public class SQLSimpleProvider implements Provider {
 	
 	public void executeActorRetrieval(){
 		try {
-			cn = MysqlConnectionProvider.getNewConnection(host, table, username, password);
+			if(cn==null)
+			{cn = MysqlConnectionProvider.getNewConnection(host, table, username, password);}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -137,10 +138,12 @@ public class SQLSimpleProvider implements Provider {
 			//all actors have been added
 			for (int i = 0; i < actorList.size(); i++) {
 				for (int j = i + 1; j < actorList.size(); j++) {
+					if(actorList.get(i) != actorList.get(j)){
 					Pair pair = new Pair(actorList.get(i), actorList.get(j));
-					currentMovieActorPairs.add(pair);
+					currentMovieActorPairs.add(pair);}
 				}
 			}
+			actorsRS.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

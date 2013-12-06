@@ -7,6 +7,7 @@ import java.util.Map;
 public class PairFinder {
 
 	int k;
+	int ik;
 	ArrayList<Pair> pairs;
 	Provider provider;
 	
@@ -15,6 +16,7 @@ public class PairFinder {
 	public PairFinder(int k, Provider provider)
 	{
 		this.k =k;
+		this.ik =k;
 		pairs = new ArrayList<Pair>(k);
 		this.provider = provider;		
 	}
@@ -24,8 +26,9 @@ public class PairFinder {
 	{
 		System.out.println("Starting MG");		
 		
-		if(to-from<years)
+		if(to-from<years){
 			provider.setStream(from, to);
+		}
 		else
 		{
 			int count = to-from-years+1;
@@ -73,7 +76,7 @@ public class PairFinder {
 	}
 	
 	private void increaseK() {
-		k+=k;
+		k=ik*k;
 	}
 	
 	private int decrements;

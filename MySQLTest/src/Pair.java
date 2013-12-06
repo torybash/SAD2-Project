@@ -22,7 +22,7 @@ public class Pair implements Comparable  {
 		if(a instanceof Pair)
 		{
 			Pair p = (Pair) a;
-			if(p.a1 == a1 && p.a2 == a2)
+			if((p.a1 == a1 && p.a2 == a2) || (p.a1 == a2 && p.a2 ==a1))
 				return 0;
 				
 			return -1;
@@ -34,7 +34,7 @@ public class Pair implements Comparable  {
 	public boolean equals(Object a){
 		if(a instanceof Pair){
 			Pair p = (Pair) a;
-			if(p.a1 == a1 && p.a2 == a2) return true;
+			if((p.a1 == a1 && p.a2 == a2) || (p.a1 == a2 && p.a2 ==a1)) return true;
 		}
 		return false;
 	}
