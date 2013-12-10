@@ -29,7 +29,7 @@ public class MTPairFinder {
 	public MTPairFinder(int k, Provider provider)
 	{
 		this.k =k;
-		this.ik =k;		
+		this.ik =k;	
 		this.provider = provider;		
 	}
 	
