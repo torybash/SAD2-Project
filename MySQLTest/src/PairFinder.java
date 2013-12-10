@@ -51,7 +51,7 @@ public class PairFinder {
                                 }
                                 else{
                                         System.out.println(i+1+"/"+count);
-                                        toCount+=i;        
+                                        toCount+=1;        
                                         fromCount+=1;
                                 }
                                 decrements=0;

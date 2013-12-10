@@ -60,7 +60,8 @@ public class MTPairFinder {
 				new Thread(new MGThread(k,ik,fromCount,ps, i, this)).start();
 				}
 				
-				
+				 toCount+=1;        
+                 fromCount+=1;	
 			
 				
 			}
@@ -77,7 +78,7 @@ public class MTPairFinder {
 				q--;
 			}
 			else{
-				if(pqe==null || pqe.count>MTPairFinder.pairs[q].count)
+				if(pqe==null || pqe.count<MTPairFinder.pairs[q].count)
 				{
 					pqe=MTPairFinder.pairs[q];
 				}
