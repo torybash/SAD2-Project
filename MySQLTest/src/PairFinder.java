@@ -57,6 +57,7 @@ public class PairFinder {
 					fromCount+=1;
 				}
 				decrements=0;
+				counter=0;
 				
 				System.out.println(cP[0].toString());
 				System.out.println(cP[1].toString());
@@ -155,7 +156,7 @@ public class PairFinder {
 				result2 = e;				
 			}
 
-		}
+		}		
 		System.out.println("C: "+counter);
 		System.out.println("D: " +decrements);
 		Pair[] ps = new Pair[2];
