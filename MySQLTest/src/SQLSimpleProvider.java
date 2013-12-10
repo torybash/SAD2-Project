@@ -150,6 +150,11 @@ public class SQLSimpleProvider implements Provider {
 	
 	}
 	
+	public Provider copy()
+	{
+		return new SQLSimpleProvider();
+	}
+	
 	public void closeOff(){
 		try {
 			cn.close();
