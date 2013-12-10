@@ -10,7 +10,7 @@ public class MGThread implements Runnable {
 		{
 		 t = new Thread(this, "MGTThreadK");
 		 this.k=k;
-		 ik=k;
+		 this.ik=ik;
 		 this.pr=p;
 		 this.i=i;
 		 
