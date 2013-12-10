@@ -6,7 +6,7 @@ public class MGThread implements Runnable {
 		int ik;
 		Provider pr;
 		int i;
-		public MGThread(int k, int year, Provider p, int i, MTPairFinder e)
+		public MGThread(int k, int ik, int year, Provider p, int i, MTPairFinder e)
 		{
 		 t = new Thread(this, "MGTThreadK");
 		 this.k=k;

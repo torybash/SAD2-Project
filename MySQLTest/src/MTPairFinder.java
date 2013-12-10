@@ -52,12 +52,12 @@ public class MTPairFinder {
 				Provider ps = provider.copy();
 				ps.setStream(fromCount,toCount);
 				if(i==0)
-				 {MGThread t = new MGThread(k,fromCount,ps, i, this);
+				 {MGThread t = new MGThread(k,ik,fromCount,ps, i, this);
 				 t.run();
 				 k=t.k;}
 				 
 				else{
-				new Thread(new MGThread(k,fromCount,ps, i, this)).start();
+				new Thread(new MGThread(k,ik,fromCount,ps, i, this)).start();
 				}
 				
 				
@@ -175,8 +175,8 @@ public class MTPairFinder {
 			}
 
 		}		
-		System.out.println("C: "+counter);
-		System.out.println("D: " +decrements);
+		//System.out.println("C: "+counter);
+		//System.out.println("D: " +decrements);
 		Pair[] ps = new Pair[2];
 		ps[0] = result;
 		ps[1] = result2;

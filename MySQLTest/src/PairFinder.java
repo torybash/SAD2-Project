@@ -26,10 +26,7 @@ public class PairFinder {
         {
                 System.out.println("Starting MG");                
                 
-                if(to-from<years){
-                        provider.setStream(from, to);
-                }
-                else
+
                 {
                         int count = to-from-years+1;
                         int fromCount=from;
@@ -50,6 +47,7 @@ public class PairFinder {
                                         
                                         increaseK();
                                         provider.restartMovieOutput();
+                                        this.pairs = new ArrayList<Pair>();
                                 }
                                 else{
                                         System.out.println(i+1+"/"+count);
