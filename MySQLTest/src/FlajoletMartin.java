@@ -72,6 +72,7 @@ public class FlajoletMartin {
         out = Math.pow(2.0, r);
         System.out.println(q+" "+q2+" "+q3+" r: " +r);        
         System.out.println(out/0.77351);
+        
         System.out.println();
         return out/0.77351;
 	}
