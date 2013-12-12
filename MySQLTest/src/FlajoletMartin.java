@@ -67,6 +67,7 @@ public class FlajoletMartin {
         		break;
         	q3++;
         }
+        
         double r = (q3+q2+q)/3.0;
         double out =2;
         out = Math.pow(2.0, r);
