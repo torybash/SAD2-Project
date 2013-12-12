@@ -33,8 +33,8 @@ public class SQLSimpleProvider implements Provider {
 		beginYear = from;
 		endYear = to;
 		
-		if (moviesRS == null){
-			sqlStatement = "Select id, year from movies;";
+		if (moviesRS == null){			
+			sqlStatement = "Select id, year, g.genre from movies inner join movies_genres g on g.movie_id=id;";
 			executeMovieRetrieval();
 		}else{
 			sqlStatement = "Select actor_id, movie_id from roles "
@@ -62,7 +62,7 @@ public class SQLSimpleProvider implements Provider {
 				
 		try{
 		    java.sql.Statement stmt = cn.createStatement(java.sql.ResultSet.TYPE_FORWARD_ONLY, java.sql.ResultSet.CONCUR_READ_ONLY);		    
-		    moviesRS = stmt.executeQuery("Select id, year from movies;"); //ps.executeQuery();
+		    moviesRS = stmt.executeQuery(sqlStatement); //ps.executeQuery();
 		} catch (Exception s){
 			System.out.println(s);
 		} 
@@ -101,10 +101,16 @@ public class SQLSimpleProvider implements Provider {
 					if (moviesRS.next()){	
 						int currentMovieYear = moviesRS.getInt(2);
 						if (currentMovieYear >= beginYear && currentMovieYear <= endYear){
+							boolean tester=true;
+							if(this.genre!="")
+								tester=false;
+							if(tester || moviesRS.getString(3)==this.genre)
+							{
 							currentMovieID = moviesRS.getInt(1);
 							setStream(beginYear, endYear); //creates actorRS
 							prepareActorPairs();
 							return getNextPair(); //try again now that we loaded a movies actors
+							}
 						}
 					}else{ //No movies left! Return null to indicate no more pairs
 						return null;
@@ -166,6 +172,14 @@ public class SQLSimpleProvider implements Provider {
 		}
 		
 		
+	}
+
+	public String genre = "";
+	@Override
+	public void setStream(int from, int to, String genre) {
+		// TODO Auto-generated method stub
+		this.genre=genre;
+		setStream(from,to);
 	}
 	
 
