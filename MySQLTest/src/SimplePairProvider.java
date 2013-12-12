@@ -64,4 +64,20 @@ public class SimplePairProvider implements Provider {
 	}
 
 
+
+	@Override
+	public Provider copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setStream(int from, int to, String genre) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
