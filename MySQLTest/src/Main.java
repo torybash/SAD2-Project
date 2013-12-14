@@ -6,20 +6,38 @@ public class Main {
 		//test.run();
 		
 		//SQLSimpleProvider ssp2 = new SQLSimpleProvider();
+		
+		Provider ssp = new SQLSimpleProvider();
+		PairFinder pf = new PairFinder(2, ssp);
+		
+		System.out.println("Misra-Gries:");
+		long timerMG = System.currentTimeMillis();
+		pf.MisraGriesAlgo(1,1910,1911);
+		timerMG = System.currentTimeMillis() - timerMG;
+		System.out.println(timerMG + "ms");
 
-		int count=0;
-		double total = 0;
-		while(count<=10){
-		SQLSimpleProvider ssp = new SQLSimpleProvider();
+		System.out.println("Stupid-Algo:");
+		long timer = System.currentTimeMillis();
+		pf.StupidAlgo(1910, 1911);
+		timer = System.currentTimeMillis() - timer;
+		System.out.println(timer + "ms");
 		
-		FlajoletMartin fm = new FlajoletMartin(2,ssp);
-		total=total+fm.countDistinct("", 1910, 1925);
-		count++;}
-		System.out.println(total/count);
-SQLSimpleProvider ssp = new SQLSimpleProvider();
-		
-		FlajoletMartin fm = new FlajoletMartin(2,ssp);
-		fm.DumDistinct("", 1910, 1925);
+		ssp.closeOff();
+
+//		int count=0;
+//		double total = 0;
+//		while(count<=10){
+//			SQLSimpleProvider ssp = new SQLSimpleProvider();
+//			
+//			FlajoletMartin fm = new FlajoletMartin(2,ssp);
+//			total=total+fm.countDistinct("", 1910, 1925);
+//			count++;
+//		}
+//		System.out.println(total/count);
+//		SQLSimpleProvider ssp = new SQLSimpleProvider();
+//		
+//		FlajoletMartin fm = new FlajoletMartin(2,ssp);
+//		fm.DumDistinct("", 1910, 1925);
 			
 	}
 	

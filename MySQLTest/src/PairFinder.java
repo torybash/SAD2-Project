@@ -181,9 +181,9 @@ public class PairFinder {
 
 
 
-        public void StupidAlgo() {
+        public void StupidAlgo(int from, int to) {
                 
-                provider.setStream(1904, 1910);
+                provider.setStream(from, to);
                 
                 ArrayList<Pair> pairs = new ArrayList<Pair>();
                 
