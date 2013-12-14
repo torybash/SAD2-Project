@@ -6,6 +6,7 @@ public class MGThread implements Runnable {
 		int ik;
 		Provider pr;
 		int i;
+		int year;
 		public MGThread(int k, int ik, int year, Provider p, int i, MTPairFinder e)
 		{
 		 t = new Thread(this, "MGTThreadK");
@@ -13,7 +14,7 @@ public class MGThread implements Runnable {
 		 this.ik=ik;
 		 this.pr=p;
 		 this.i=i;
-		 
+		 this.year = year;
 		 i++;
 //		 e.notifyAll();
 		 
@@ -131,6 +132,8 @@ public class MGThread implements Runnable {
 			}		
 			System.out.println("C: "+counter);
 			System.out.println("D: " +decrements);
+			System.out.println("y: " +year);
+			
 			Pair[] ps = new Pair[2];
 			ps[0] = result;
 			ps[1] = result2;

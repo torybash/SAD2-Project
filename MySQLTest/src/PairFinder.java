@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class PairFinder {
@@ -36,18 +33,23 @@ public class PairFinder {
                         {
                                                         
                                 provider.setStream(fromCount,toCount);
-                                pairs[i] = MisraGriesAlgo(k);
+                                pairs[i] = MisraGriesAlgo(k,fromCount);
                                 
                                 Pair[] cP = pairs[i];
                                 int min1 = cP[0].count;
                                 int max2 = cP[1].count + decrements;
+                                System.out.println("C: "+counter);
+                    			System.out.println("D: " +decrements);
+                				System.out.println(cP[0].toString());
+                				System.out.println(cP[1].toString());	
                                 if(min1<max2)
                                 {
                                         i--; //restarting this iteration
                                         
                                         increaseK();
-                                        provider.restartMovieOutput();
-                                        this.pairs = new ArrayList<Pair>();
+                                        //provider.restartMovieOutput();
+                                        
+                                       // this.pairs = new ArrayList<Pair>();
                                 }
                                 else{
                                         System.out.println(i+1+"/"+count);
@@ -56,7 +58,8 @@ public class PairFinder {
                                 }
                                 decrements=0;
                                 counter=0;
-                                
+                                provider.restartMovieOutput();
+                                this.pairs = new ArrayList<Pair>();
                                 //System.out.println(cP[0].toString());
                                 //System.out.println(cP[1].toString());
                                 
@@ -74,7 +77,7 @@ public class PairFinder {
                 		for(int q=0; q<count;q++)
                 		{		
                 			
-                			if(pqe==null|| pairs[q][0].count<pqe.count)
+                			if(pqe==null|| pairs[q][0].count>pqe.count)
                 				{
                 					pqe=pairs[q][0];
                 				}
@@ -94,9 +97,9 @@ public class PairFinder {
         
         private int decrements;
         private int counter;
-        public Pair[] MisraGriesAlgo(int k)
+        public Pair[] MisraGriesAlgo(int k, int from)
         {                
-                System.out.println("Starting MisraGriesAlgo(int k) with k=" + k);
+                System.out.println("Starting MisraGriesAlgo(int k) with k=" + k + "   -   " + from);
                 
                 boolean checker =true;
                 Pair p = provider.getNextPair();

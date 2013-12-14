@@ -1,4 +1,5 @@
 
+
 public class Main {
 	public static void main(String[] arg) {
 		//MySQLTest test = new MySQLTest();
@@ -6,40 +7,81 @@ public class Main {
 		//test.run();
 		
 		//SQLSimpleProvider ssp2 = new SQLSimpleProvider();
-		
-		Provider ssp = new SQLSimpleProvider();
-		PairFinder pf = new PairFinder(2, ssp);
-		
-		System.out.println("Misra-Gries:");
-		long timerMG = System.currentTimeMillis();
-		pf.MisraGriesAlgo(1,1910,1911);
-		timerMG = System.currentTimeMillis() - timerMG;
-		System.out.println(timerMG + "ms");
 
-		System.out.println("Stupid-Algo:");
-		long timer = System.currentTimeMillis();
-		pf.StupidAlgo(1910, 1911);
-		timer = System.currentTimeMillis() - timer;
-		System.out.println(timer + "ms");
+		//break;
+		SQLSimpleProvider ssp2 = new SQLSimpleProvider();
+		PairFinder pfs3 = new PairFinder(2,ssp2);
+		pfs3.StupidAlgo(1910, 1940);
+		start();
+		SQLSimpleProvider ssp4 = new SQLSimpleProvider();
+		PairFinder pfs = new PairFinder(2,ssp4);
+		pfs.MisraGriesAlgo(2, 1910, 1940);
+		stop();
+		System.out.println("Time of Sekvential: " +Main.getElapsedTimeSecs());
+		start();
+		SQLSimpleProvider ssp3 = new SQLSimpleProvider();
+		MTPairFinder pfs2 = new MTPairFinder(2,ssp3);
+		pfs2.MisraGriesAlgo(2, 1910, 1940);
+		stop();
+		System.out.println("Multicore MG : "+ Main.getElapsedTimeSecs());
 		
-		ssp.closeOff();
-
-//		int count=0;
-//		double total = 0;
-//		while(count<=10){
-//			SQLSimpleProvider ssp = new SQLSimpleProvider();
-//			
-//			FlajoletMartin fm = new FlajoletMartin(2,ssp);
-//			total=total+fm.countDistinct("", 1910, 1925);
-//			count++;
-//		}
-//		System.out.println(total/count);
-//		SQLSimpleProvider ssp = new SQLSimpleProvider();
-//		
-//		FlajoletMartin fm = new FlajoletMartin(2,ssp);
-//		fm.DumDistinct("", 1910, 1925);
+		int count=0;
+		double total = 0;
+		while(count<=10){
+		SQLSimpleProvider ssp = new SQLSimpleProvider();
+		
+		FlajoletMartin fm = new FlajoletMartin(2,ssp);
+		total=total+fm.countDistinct("", 1910, 1940);
+		count++;}
+		System.out.println(total/count);
+		SQLSimpleProvider ssp = new SQLSimpleProvider();
+		
+		FlajoletMartin fm = new FlajoletMartin(2,ssp);
+		fm.DumDistinct("", 1910, 1940);
 			
 	}
+	
+	 private static long startTime = 0;
+	  private static long stopTime = 0;
+	  private static boolean running = false;
+
+
+	  public static void start() {
+	    startTime = System.currentTimeMillis();
+	    running = true;
+	  }
+
+
+	  public static void stop() {
+	    stopTime = System.currentTimeMillis();
+	    running = false;
+	  }
+
+
+	  //elaspsed time in milliseconds
+	  public static long getElapsedTime() {
+	    long elapsed;
+	    if (running) {
+	      elapsed = (System.currentTimeMillis() - startTime);
+	    }
+	    else {
+	      elapsed = (stopTime - startTime);
+	    }
+	    return elapsed;
+	  }
+
+
+	  //elaspsed time in seconds
+	  public static long getElapsedTimeSecs() {
+	    long elapsed;
+	    if (running) {
+	      elapsed = ((System.currentTimeMillis() - startTime) / 1000);
+	    }
+	    else {
+	      elapsed = ((stopTime - startTime) / 1000);
+	    }
+	    return elapsed;
+	  }
 	
 }
 		/*ssp = new SQLSimpleProvider();
