@@ -78,7 +78,7 @@ public class FlajoletMartin {
         double modifiedOut = out*(1-bias);
         
         
-        System.out.println(out/0.77351);
+        //System.out.println(out/0.77351); //deprecated
         System.out.println(modifiedOut);
         
         System.out.println();
