@@ -37,14 +37,14 @@ public class MTPairFinder {
 	public void MisraGriesAlgo(int years, int from, int to)
 	{
 		try{
-			Pair[] pairs = new Pair[count];
+			
 		System.out.println("Starting MG");
-		int count = to-from-years+1;
+		   int count = to-from-years+1;
+           int fromCount=from;
+           int toCount=from+years;
 		MTPairFinder.count = count;
 		{
-			
-			int fromCount=from;
-			int toCount=from+years;
+					
 			
 			for(int i=0; i<count;i++)
 			{
@@ -62,6 +62,7 @@ public class MTPairFinder {
 				
 				 toCount+=1;        
                  fromCount+=1;	
+                 
 			
 				
 			}
@@ -80,6 +81,7 @@ public class MTPairFinder {
 			else{
 				if(pqe==null || pqe.count<MTPairFinder.pairs[q].count)
 				{
+					System.out.println(q+1+"/" + count);
 					pqe=MTPairFinder.pairs[q];
 				}
 			}

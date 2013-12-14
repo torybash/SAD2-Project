@@ -17,6 +17,12 @@ public class Pair implements Comparable  {
 		return ""+a1 + " - " + a2 + ": " + count ;
 	}
 	
+	
+	public String toString2()
+	{
+		return a1 + "-" + a2;
+	}
+	
 	@Override
 	public int compareTo(Object a) {
 		if(a instanceof Pair)
