@@ -76,16 +76,10 @@ public class FlajoletMartin {
         
         
         //The next two lines find the bias and subtract it.
-        double bias = 0.31/(Math.pow(2, r)); //find the bias
-        //double modifiedOut = out*(1-bias);
-        
-       
-        
-        //TODO delete this test, or be happy if it works. Next line applies the bias to R instead.
-        double modifiedOut = Math.pow(2.0, r-bias);
-        
-        
-        //System.out.println(out/0.77351); //deprecated
+        double bias = 0.31/(Math.pow(2, r)); //find the bias. Very small value when r is big.
+        double modifiedOut = out*(1-bias);
+                
+        //System.out.println(out/0.77351); //decided against. See report
         System.out.println(modifiedOut);
         
         System.out.println();
