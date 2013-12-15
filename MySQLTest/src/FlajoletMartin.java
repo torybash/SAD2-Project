@@ -9,6 +9,8 @@ public class FlajoletMartin {
     ArrayList<Pair> pairs;
     Provider provider;
     int[] genres = new int[22];
+    int[] m = new int[3];
+    int[] n = new int[3];
     boolean[] bV = new boolean[64]; 
     boolean[] bV2 = new boolean[64];
     boolean[] bV3 = new boolean[64];
@@ -29,14 +31,19 @@ public class FlajoletMartin {
         Pair a =provider.getNextPair();
         int count1 =0;
         int count =0;                       
-        
+        m[0] = find();
+        m[1] = find();
+        m[2] = find();
+        n[0] = find();
+        n[1] = find();
+        n[2] = find();
         while(a!=null)
         {        	           
         	count++;
         	//System.out.println(CountTrails(hash(a)));
-        	bV[CountTrails(hash(a))]=true;
-        	bV2[CountTrails(hash(a))]=true;
-        	bV3[CountTrails(hash(a))]=true;
+        	bV[CountTrails(hash(a,1))]=true;
+        	bV2[CountTrails(hash(a,2))]=true;
+        	bV3[CountTrails(hash(a,3))]=true;
         	a = provider.getNextPair();
         	//each distinct pair generates a triangle with the genre
         	//triangles between pairs in each movie?
@@ -71,25 +78,11 @@ public class FlajoletMartin {
         double r = (q3+q2+q)/3.0;
         double out =2;
         out = Math.pow(2.0, r);
-        System.out.println(q+" "+q2+" "+q3+" r: " +r);   
-        
-        
-        
-        //The next two lines find the bias and subtract it.
-        double bias = 0.31/(Math.pow(2, r)); //find the bias
-        //double modifiedOut = out*(1-bias);
-        
-       
-        
-        //TODO delete this test, or be happy if it works. Next line applies the bias to R instead.
-        double modifiedOut = Math.pow(2.0, r-bias);
-        
-        
-        //System.out.println(out/0.77351); //deprecated
-        System.out.println(modifiedOut);
+        System.out.println(q+" "+q2+" "+q3+" r: " +r);        
+        System.out.println(out/0.77351);
         
         System.out.println();
-        return modifiedOut;
+        return out/0.77351;
 	}
 	
 	
@@ -99,19 +92,13 @@ public class FlajoletMartin {
 		
 	}
 	
-	public int hash(Pair a)
+	public int hash(Pair a, int i)
 	{
-		char[] ch = a.toString().toCharArray();
-		int sum = 0;
-		int count =0;
-		for(char cha : ch)
-		{
-			count++;
-			sum+=(int)cha;
-			
-		}
-		int M=find();
-		int N=find();
+		
+		char[] ch = a.toString2().toCharArray();
+		
+		int M=m[i-1];
+		int N=n[i-1];
 		int first=(int)(M+N*a.hashCode());
 		//int thrid =first%second;
 		return first;
